@@ -39,7 +39,7 @@ class AutotranslateExtension extends DataExtension
                             data-value="' . $this->htmlEncode($this->owner->getField($field->getName())) . '"
                             data-source-value="' . (null === $localisedDataObject ? '' : $this->htmlEncode($localisedDataObject->{$field->getName()})) . '">
                             <span class="font-icon-translatable" title="Translatable field"></span>' . $field->getName() . '<span class="caret">&#9662;</span>
-                            <ul>
+                            <ul class="autotranslate__cms-ddmenu">
                                 ' . (null === $localisedDataObject ? '' : '<li class="js-autotranslate-translate">Translate</li><li class="js-autotranslate-revert">Revert to ' . substr($this->sourceLocale(), 3, 2) . '</li>') . '
                                 <li class="js-autotranslate-reset">Reset changes</li>
                             </ul>
