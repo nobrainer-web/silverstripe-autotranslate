@@ -8,7 +8,10 @@
         }
     ],
     "require": {
-        "tractorcow/silverstripe-fluent": ">=4.3"
+        "php": "^8.3",
+        "silverstripe/framework": "^6",
+        "silverstripe/siteconfig": "^6",
+        "tractorcow/silverstripe-fluent": "^8"
     },
     "autoload": {
         "psr-4": {
@@ -19,5 +22,10 @@
         "expose": [
             "client"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bratiask\\Autotranslate\\Tests\\": "tests/"
+        }
     }
 }

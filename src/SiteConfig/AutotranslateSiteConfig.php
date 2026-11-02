@@ -5,10 +5,10 @@ namespace Bratiask\Autotranslate\SiteConfig;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\FieldType\DBText;
 
-class AutotranslateSiteConfig extends DataExtension
+class AutotranslateSiteConfig extends Extension
 {
     const GOOGLE_TRANSLATE_API_KEY = 'GoogleTranslateApiKey';
 

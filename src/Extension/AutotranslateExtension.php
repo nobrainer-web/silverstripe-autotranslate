@@ -6,14 +6,14 @@ namespace Bratiask\Autotranslate\Extension;
 use Bratiask\Autotranslate\SiteConfig\AutotranslateSiteConfig;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FormField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\SiteConfig\SiteConfig;
 use TractorCow\Fluent\Model\Locale;
 use TractorCow\Fluent\State\FluentState;
 
-class AutotranslateExtension extends DataExtension
+class AutotranslateExtension extends Extension
 {
     const FLUENT_LOCALISED_FIELD_CSS_CLASS = 'fluent__localised-field';
     const TRANSLATABLE_FIELD_SCHEMA_DATA_TYPES = [
