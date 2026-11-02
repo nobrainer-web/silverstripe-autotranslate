@@ -28,7 +28,8 @@ class AutotranslateExtension extends Extension
 
     public function updateCMSFields(FieldList $fields): void
     {
-        if (null !== $this->apiKey()) {
+        // no key, or no Fluent locale to translate from/to (e.g. a site without locales yet): leave the fields alone
+        if (null !== $this->apiKey() && null !== $this->sourceLocale() && null !== $this->currentLocale()) {
             $localisedDataObject = $this->localisedDataObject($this->owner, $this->sourceLocale());
             foreach ($fields->dataFields() as $field) {
                 if ($this->isFieldAutotranslatable($field)) {
@@ -83,19 +84,19 @@ class AutotranslateExtension extends Extension
         return htmlspecialchars($string);
     }
 
-    private function sourceLocale(): string
+    private function sourceLocale(): ?string
     {
         if (null === self::$sourceLocale) {
-            self::$sourceLocale = Locale::singleton()->getChain()->first()->Locale;
+            self::$sourceLocale = Locale::singleton()->getChain()->first()?->Locale;
         }
 
         return self::$sourceLocale;
     }
 
-    private function currentLocale(): string
+    private function currentLocale(): ?string
     {
         if (null === self::$targetLocale) {
-            self::$targetLocale = Locale::singleton()->getCurrentLocale()->Locale;
+            self::$targetLocale = Locale::getCurrentLocale()?->Locale;
         }
 
         return self::$targetLocale;
