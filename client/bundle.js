@@ -25,14 +25,28 @@ function Autotranslate($) {
                 var elements = this.elements(event);
                 elements.holder.append('<div class="translate-in-progress js-translate-in-progress"><span>Translating...</span></div>');
                 elements.label.find('ul').hide();
-                $.post('autotranslate/translate', {
-                    source: elements.label.data('source-lang'),
-                    target: elements.label.data('target-lang'),
-                    query: elements.textarea.length > 0 ? elements.textarea.val() : elements.input.val()
-                }, function (response) {
+                $.ajax({
+                    url: 'autotranslate/translate',
+                    method: 'POST',
+                    dataType: 'text',
+                    data: {
+                        source: elements.label.data('source-lang'),
+                        target: elements.label.data('target-lang'),
+                        query: elements.textarea.length > 0 ? elements.textarea.val() : elements.input.val(),
+                        // the CMS edit form's security token (the endpoint rejects requests without it)
+                        SecurityID: elements.label.closest('form').find('input[name=SecurityID]').val()
+                            || $('input[name=SecurityID]').first().val()
+                    }
+                }).done(function (response) {
                     this.setValue(elements.input, elements.textarea, response);
-                    elements.holder.find('.js-translate-in-progress').fadeOut(200)
-                }.bind(this));
+                }.bind(this)).fail(function (xhr) {
+                    // shown as text next to the field (no browser dialog)
+                    $('<div class="translate-error"></div>')
+                        .text('Autotranslate: ' + (xhr.responseText || 'request failed'))
+                        .appendTo(elements.holder).delay(6000).fadeOut(400, function () { $(this).remove(); });
+                }).always(function () {
+                    elements.holder.find('.js-translate-in-progress').fadeOut(200, function () { $(this).remove(); });
+                });
             }.bind(this));
 
             body.on('click', '.js-autotranslate-reset', function (event) {
